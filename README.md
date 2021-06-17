@@ -1,9 +1,9 @@
 Our first major project, uses C++ and Python to execute buy/sell orders of all currently avaliable cryptocurrencies on Robinhood Crypto. Written primarily in C++, Python script files are called to execute the actual orders.
 
 Libraries in Use:
-1. Curl for People
-2. Libcurl
-3. Robin Stocks
+1. Curl for People (https://github.com/whoshuu/cpr)
+2. Curl (https://github.com/curl/curl)
+3. Robin Stocks (https://github.com/jmfernandes/robin_stocks)
 
 Major Contributors:
 Aidan Stickan (a-stickan) -  C++ end, .txt file system

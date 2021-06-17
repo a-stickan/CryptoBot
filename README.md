@@ -1,6 +1,6 @@
 Contributors:
-Aidan Stickan (C++ end, .txt file system)
-Winston Slater (Python end, .csv exportation)
+Aidan Stickan (a-stickan) -  C++ end, .txt file system
+Winston Slater - Python end, .csv exportation
 
 
 See "LICENSE.txt" for copyright information.

@@ -42,7 +42,7 @@ See the "LICENSE" file for copyright information.
    
 2. More user control over the specific buy/sell points and the actual buy/sell amount that occurs would greatly improve the code. Expanding the .txt file system would be the easiest way to solve this issue, but a fairly sophisticated embedded Python application would work even better in exchange for being far harder and more time consuming to implement.
 
-3. Login issues with "PythonEndLogin.py". We could not determine why it worked sometimes on some machines with little effort but introduced massive
+3. Login issues with "PythonEndLogin.py". I could not determine why it worked sometimes on some machines with little effort but introduced massive
    issues on others. Documentation at https://robin-stocks.readthedocs.io/en/latest/index.html.
 
 4. Try catch error handling. This could probably be expanded on and improved on the C++ end.

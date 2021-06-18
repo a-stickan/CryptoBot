@@ -106,8 +106,7 @@ int main()
 	std::cout << "  \\_____|_|  \\__,|  \\__|.__/  \\___/|____/ \\___/ \\__|\n";
 	std::cout << "              |___/    |_|                          \n\n\n";
 
-	std::cout << "\tC++ end and file system by Aidan Stickan\n";
-	std::cout << "\tPython end and Google Sheets bookeeping by Winston Slater\n\n\n";
+	std::cout << "C++ end, Python end, and file system by Aidan Stickan (a-stickan)\n\n\n";
 
 	std::cout << "_______________________________________________________________________________________________________________\n";
 	std::cout << "Disclaimers:                                                                                                   |\n";

@@ -20,7 +20,7 @@ See the "LICENSE" file for copyright information.
 2. Make sure you have Python installed on your computer and that by default .py files are opened by the Python application. HAVING THE DEFAULT AS
    AN IDE OR TEXT EDITOR MAY CAUSE SERIOUS ISSUES!
 
-3. Place the downloaded CryptoBot folder and all its files in your C drive (C:\). THE PROGRAM WILL LIKELY NOT OPERATE WITHOUT THIS STEP!
+3. Place the downloaded CryptoBot folder and all its files in your C drive (C:/). THE PROGRAM WILL LIKELY NOT OPERATE WITHOUT THIS STEP!
 
 4. Run the program by clicking on the "CryptoBotRelease" application.
 
@@ -60,6 +60,7 @@ See the "LICENSE" file for copyright information.
 		  Called as a script through the C++ end, no logic involved.
 
 **PythonEndLogin.py-** manages the login process, stores the login session for convinence afterwards. Theoretically should only show up once to prompt the user to enter their username and password, user logins are permanently saved after the fact. Called as a script through the C++ end, no logic involved.
+
 
 
 ### C++ End:

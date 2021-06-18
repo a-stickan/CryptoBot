@@ -11,7 +11,7 @@ Libraries in Use:
 See the "LICENSE" file for copyright information.
 
 
-# Instructions for Use:
+## Instructions for Use:
 
 1. Make sure you have a valid Robinhood account. CryptoBot at the moment only supports Robinhood accounts, so you will not be able to use CryptoBot if you do not have an account.
 
@@ -33,7 +33,7 @@ See the "LICENSE" file for copyright information.
 7. (Optional but highly recommended) Every time a sell/buy order is processed, a .csv file is put into CryptoBot. You can import this file
     into a sheet program like Excel to better manage your portfolio's progress and track your holdings.
 
-# Things to Change (in order of priority):
+## Things to Change (in order of priority):
 
 1. System() calls are very prominent in the C++ end. This is obviously not very scalable (or safe, or efficient), and is what limits the program 
    to Windows at the moment. I had issues with other implementations (x64 and x84 incompatibilities), and did not have time to resolve the issues behind them.
@@ -49,9 +49,9 @@ See the "LICENSE" file for copyright information.
 
 5. Stack and heap usage optimization. Not a major priority, but a lighter build of CryptoBot would be nice.
 
-# Basic Code Documentation:
+## Basic Code Documentation:
 
-## Python End:
+### Python End:
 
 **PythonEndBuy.py-** manages the execution of buy orders, exports a .csv file when completed.
 		 Called as a script through the C++ end, no logic involved.
@@ -62,7 +62,7 @@ See the "LICENSE" file for copyright information.
 **PythonEndLogin.py-** manages the login process, stores the login session for convinence afterwards. Theoretically should only show up once to prompt the user to enter their username and password, user logins are permanently saved after the fact. Called as a script through the C++ end, no logic involved.
 
 
-## C++ End:
+### C++ End:
 
 **CryptoBot.cpp-** .cpp file for the CryptoBot class. Contains most of the logic behind getting prices
 		and determining when to sell. Creates .txt files at times to pass information

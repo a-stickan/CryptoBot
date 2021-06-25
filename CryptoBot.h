@@ -1,6 +1,7 @@
 #ifndef CRYPTOBOT_H
 #define CRYPTOBOT_H
 
+
 #include <iostream>
 #include <string>
 #include <vector>

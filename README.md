@@ -15,7 +15,7 @@ See the "LICENSE" file for copyright information.
 
 1. Make sure you have a valid Robinhood account. CryptoBot at the moment only supports Robinhood accounts, so you will not be able to use CryptoBot if you do not have an account.
 
-1. Install and extract the latest stable release .zip folder, being sure to ignore any security/antivirus warnings that pop up. Even though the project is open source and you can even check the code yourself to see it isn't malicous, downloading unknown .exe files from the internet will predictably set off some alarms in your system. As of now, the current stable release supports Windows, Linux, and Mac OS.
+1. Install and extract the latest stable release .zip folder, being sure to ignore any security/antivirus warnings that pop up. Even though the project is open source and you can check the code yourself to see it isn't malicious, downloading unknown .exe files from the internet will (predictably) set off some alarms in your system. As of now, the current stable release supports Windows, Linux, and Mac OS.
 
 2. Make sure all the files for the program are in the installed folder (name and location of the folder is irrelevant, but the names and locations of the files themselves should not be changed).
 

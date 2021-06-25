@@ -15,9 +15,9 @@ See the "LICENSE" file for copyright information.
 
 1. Make sure you have a valid Robinhood account. CryptoBot at the moment only supports Robinhood accounts, so you will not be able to use CryptoBot if you do not have an account.
 
-1. Install the latest stable release. The latest release supports Windows, Linux, and Mac OS.
+1. Install and extract the latest stable release .zip folder. The current stable release supports Windows, Linux, and Mac OS.
 
-2. Make sure all the files for the program are in a folder (name of the folder is irrelevant, but the names of the files themselves should not be changed).
+2. Make sure all the files for the program are in the installed folder (name and location of the folder is irrelevant, but the names and locations of the files themselves should not be changed).
 
 2. Make sure you have Python 3 installed on your computer and that by default .py files are opened by the Python application. HAVING THE DEFAULT AS
    AN IDE OR TEXT EDITOR MAY CAUSE SERIOUS ISSUES!
@@ -30,7 +30,7 @@ See the "LICENSE" file for copyright information.
    and input your username, password, and secret code when prompted. Assuming you have store_session still set to true, the problem
    should be fixed on all future logins until the login token expires. You may have to manually edit the .py file with your credentials to get it working, this step was inconsistent at best from machine to machine in my testing.
 
-6. (Optional but highly recommended) Every time a sell/buy order is processed, a .csv file is put into CryptoBot. You can import this file
+6. (Optional but highly recommended) Every time a sell/buy order is processed, a .csv file is put into the installed folder. You can import this file
     into a sheet program like Excel to better manage your portfolio's progress and track your holdings.
 
 ## Things to Change (in order of priority):

@@ -1,7 +1,17 @@
 #include "CryptoBot.h"
 #include "Portfolio.h"
 #include <limits>
+#include <filesystem>
 #undef max
+
+void clearConsole() //change system() dependency eventually, bugtest this on Linux later
+{
+#ifdef _unix_
+	std::system("clear");
+#else
+	std::system("CLS");
+#endif
+}
 
 void errorMessage()
 {
@@ -9,7 +19,7 @@ void errorMessage()
 	quick_exit(EXIT_SUCCESS);
 }
 
-inline CryptoBot initializeCrypto()
+CryptoBot initializeCrypto(std::string path)
 {
 	std::string coin_input;
 	std::string backup_input;
@@ -88,8 +98,136 @@ inline CryptoBot initializeCrypto()
 		std::cout << "\nYou have made a typo. Please try again.\n";
 	}
 
-	system("CLS"); //end implementation likely GUI based, took shortcuts with system("CLS") for readability
-	CryptoBot bot = CryptoBot(coin_input, amount_tradable, buying_power);
+	double percent_ceiling = -1;
+	double percent_ceiling_backup = -1;
+	while (true)
+	{
+		std::cout << "\nPlease enter the percentage ceiling you want to sell at.\nFor example, entering 1.18 would execute a market sell when the price is 18% HIGHER than the initial value at runtime.\nTHE VALUE MUST BE GREATER THAN 1!\nEnter \"-999\" if you do not want to sell at any value above your initial price.\n";
+		std::cin >> percent_ceiling;
+		
+		if (percent_ceiling <= 1 || !std::cin)
+		{
+			if (percent_ceiling == -999)
+			{
+				break;
+			}
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_ceiling = -1;
+		}
+		std::cout << "Please reenter this number, making sure that it is indeed a percentage ceiling you feel comfortable selling at.\n";
+		std::cin >> percent_ceiling_backup;
+		if (percent_ceiling <= 1 || !std::cin)
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_ceiling_backup = -1;
+		}
+		if (percent_ceiling == percent_ceiling_backup && percent_ceiling != -1)
+		{
+			break;
+		}
+		std::cout << "\nYou have made a typo. Please try again.\n";
+	}
+
+	double percent_floor = -1;
+	double percent_floor_backup = -1;
+	while (true)
+	{
+		std::cout << "\nPlease enter the percentage floor you want to sell at.\nFor example, entering .75 would execute a market sell when the price is 25% LOWER than the initial value at runtime.\nTHE VALUE MUST BE LESS THAN 1 AND GREATER THAN 0!\nEnter \"-999\" if you do not want to sell at any value below your initial price.\n";
+		std::cin >> percent_floor;
+		
+		if (percent_floor >= 1 || percent_floor <= 0 || !std::cin)
+		{
+			if (percent_floor == -999)
+			{
+				break;
+			}
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_floor = -1;
+		}
+		std::cout << "Please reenter this number, making sure that it is indeed a percentage floor you feel comfortable selling at.\n";
+		std::cin >> percent_floor_backup;
+		if (percent_floor_backup >= 1 || !std::cin)
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_floor_backup = -1;
+		}
+		if (percent_floor == percent_floor_backup && percent_floor != -1)
+		{
+			break;
+		}
+		std::cout << "\nYou have made a typo. Please try again.\n";
+	}
+
+	double percent_buy = -1;
+	double percent_buy_backup = -1;
+	while (true)
+	{
+		std::cout << "\nPlease enter the percentage of your total allocated buying power you would like CryptoBot to spend\non " + coin_input + " when the buy logic triggers.\nFor example, entering .75 will spend 75% of your buying power on the tracked coin.\nTHE VALUE MUST BE LESS THAN OR EQUAL TO 1 AND GREATER THAN 0!\nEnter \"-999\" if you do not want to buy the coin.\n";
+		std::cin >> percent_buy;
+
+		if (percent_buy <= 0 || percent_buy > 1 || !std::cin)
+		{
+			if (percent_buy == -999)
+			{
+				break;
+			}
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_buy = -1;
+		}
+		std::cout << "Please reenter this number, making sure that it is indeed a sell percentage you feel comfortable with.\n";
+		std::cin >> percent_buy_backup;
+		if (percent_buy_backup < 0 || percent_buy_backup >= 1 || !std::cin)
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_buy_backup = -1;
+		}
+		if (percent_buy == percent_buy_backup && percent_buy != -1)
+		{
+			break;
+		}
+		std::cout << "\nYou have made a typo. Please try again.\n";
+	}
+
+	double percent_sell = -1;
+	double percent_sell_backup = -1;
+	while (true)
+	{
+		std::cout << "\nPlease enter the percentage of your amount tradable of " + coin_input + " you would\nlike CryptoBot to sell when the sell logic triggers.\nFor example, entering .50 will sell 50% of the coin's amount tradable.\nTHE VALUE MUST BE LESS THAN OR EQUAL TO 1 AND GREATER THAN 0!\nEnter \"-999\" if you do not want to sell the coin.\n";
+		std::cin >> percent_sell;
+
+		if (percent_sell <= 0 || percent_sell > 1 || !std::cin)
+		{
+			if (percent_sell == -999)
+			{
+				break;
+			}
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_sell = -1;
+		}
+		std::cout << "Please reenter this number, making sure that it is indeed a sell percentage you feel comfortable with.\n";
+		std::cin >> percent_sell_backup;
+		if (percent_sell_backup < 0 || percent_sell_backup >= 1 || !std::cin)
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			percent_sell_backup = -1;
+		}
+		if (percent_sell == percent_sell_backup && percent_sell != -1)
+		{
+			break;
+		}
+		std::cout << "\nYou have made a typo. Please try again.\n";
+	}
+
+	clearConsole(); 
+	CryptoBot bot = CryptoBot(coin_input, amount_tradable, buying_power, percent_ceiling, percent_floor, percent_buy, percent_sell, path);
 	return bot;
 }
 
@@ -106,8 +244,7 @@ int main()
 	std::cout << "  \\_____|_|  \\__,|  \\__|.__/  \\___/|____/ \\___/ \\__|\n";
 	std::cout << "              |___/    |_|                          \n\n\n";
 
-	std::cout << "\tC++ end and file system by Aidan Stickan\n";
-	std::cout << "\tPython end and Google Sheets bookeeping by Winston Slater\n\n\n";
+	std::cout << "C++ end, Python end, and file system by Aidan Stickan (a-stickan)\n\n\n";
 
 	std::cout << "_______________________________________________________________________________________________________________\n";
 	std::cout << "Disclaimers:                                                                                                   |\n";
@@ -127,15 +264,54 @@ int main()
 		std::getline(std::cin, user_input);
 		if (user_input == "I AGREE")
 		{
+			std::cout << "\n\n\n";
 			break;
 		}
 		std::cout << "You have made a typo. Remember that \"I AGREE\" is case sensitive\n";
 	}
 
-	system("CLS"); //end implementation likely GUI based, took shortcuts with system("CLS") for readability
-	//feel free to embed Python here for greater portability (we had x84 x64 differences that we didn't want to resolve)
-	system("C:/CryptoBot/PythonEndLogin.py");
-	system("CLS");
+	std::string location = std::filesystem::current_path().string() + "/";
+	for (int x = 0; x < location.size(); x++)
+	{
+		if (location[x] == '\\')
+		{
+			location[x] = '/';
+		}
+	}
+	std::string user_path;
+	std::string path_input;
+	while (true)
+	{
+		std::cout << "Location of the installed CryptoBot folder is: \n" << location << "\n\n";
+		std::cout << "Please write \"correct\" if it is correct, otherwise write \"incorrect\" and substitute your own path.\nSUBSTITUTE AT YOUR OWN RISK, MAJOR ERRORS COULD STEM FROM AN INCORRECT PATH!\n";
+		std::cout << "If you do not yet have a CryptoBot folder, review the installation instructions in the README.md file on GitHub.\n";
+		std::cin >> path_input;
+		if (path_input == "correct")
+		{
+			user_path = location;
+			if (std::filesystem::exists(user_path))
+			{
+				std::cout << "\n\n";
+				break;
+			}
+		}
+		if (path_input == "incorrect")
+		{
+			std::cout << "Enter the path of the CryptoBot folder manually (formatting identical to that of the location seen above).\nREGARDLESS OF OS, USE / FOR PATH DELIMITERS!\n";
+			std::cin >> user_path;
+			if (std::filesystem::exists(user_path))
+			{
+				std::cout << "\n\n";
+				break;
+			}
+		}
+		std::cout << "\nYou have either made a typo or the path to the file does not exist. Please try again.\n\n";
+	}
+	
+	std::string string_path = user_path + "PythonEndLogin.py";
+	char* char_path = const_cast<char*>(string_path.c_str());
+	std::system(char_path);
+	free(char_path);
 
 	std::ifstream buyfile("buy.txt");
 	if (buyfile.good()) //logic to make sure that buy.txt doesn't already exist
@@ -149,6 +325,7 @@ int main()
 		std::remove("sell.txt");
 	}
 
+	clearConsole();
 
 	std::string coin_check;
 	int counter = 0;
@@ -165,7 +342,7 @@ int main()
 		std::cin >> coin_check;
 		if (coin_check == "add")
 		{
-			portfolio.newBot(initializeCrypto());
+			portfolio.newBot(initializeCrypto(user_path));
 			counter++;
 		}
 		else
@@ -181,7 +358,7 @@ int main()
 		}
 	}
 
-	system("CLS"); //end implementation likely GUI based, took shortcuts with system("CLS") for readability
+	clearConsole(); 
 	portfolio.threadedUpdate();
 	at_quick_exit(errorMessage);
 }

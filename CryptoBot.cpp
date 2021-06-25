@@ -1,17 +1,25 @@
 #pragma warning(disable:4996)
 #include "CryptoBot.h"
 
-CryptoBot::CryptoBot(std::string name, double tradable, double buying)
+CryptoBot::CryptoBot(std::string name, double tradable, double buying, double ceiling, double floor, double buy, double sell, std::string path)
 {
 	crypto_name = name;
+	directory = path;
 	amount_tradable = tradable;
 	buying_power = buying;
+	percent_ceiling = ceiling;
+	percent_floor = floor;
+	percent_buy = buy;
+	percent_sell = sell;
+
 	double temp = getPrice(name);
 	initial_price = temp;
 	current_price = temp;
 	min_price = temp;
-	cycle_counter = 0;
 	velocity = 0; //change in price from cycle to cycle
+
+	cycle_counter = 0;
+	
 };
 
 double CryptoBot::getPrice(std::string name)
@@ -93,12 +101,10 @@ void CryptoBot::updatePrice()
 	std::cin.tie(nullptr);
 
 	std::cout << "Name: " << crypto_name << "\n";
-	std::cout << "Current: " << current_price << "\n";
-	std::cout << "Initial: " << initial_price << "\n";
-	std::cout << "Min: " << min_price << "\n";
-	std::cout << "Amount Held: " << amount_tradable << "\n";
-	std::cout << "Velocity: " << velocity << "\n";
-	std::cout << "Counter: " << cycle_counter << "\n\n";
+	std::cout << "Current: $" << current_price << "\n";
+	std::cout << "Initial: $" << initial_price << "\n";
+	std::cout << "Percent Change: " << (current_price - initial_price)/ initial_price << " %\n";
+	std::cout << "Amount Held: " << amount_tradable << "\n\n";
 
 	transaction_limits(); //updatePrice() and transaction_limits() call each other, creating an infinite loop
 };
@@ -123,7 +129,7 @@ void CryptoBot::fileCreation(std::string type)
 			std::this_thread::sleep_for(timespan);
 		}
 		std::ofstream file("buy.txt");
-		file << ticker << "\n" << amount_tradable << "\n" << buying_power;
+		file << ticker << "\n" << amount_tradable << "\n" << buying_power << "\n" << percent_buy;
 		file.close();
 	}
 	else
@@ -137,43 +143,47 @@ void CryptoBot::fileCreation(std::string type)
 			std::this_thread::sleep_for(timespan);
 		}
 		std::ofstream file("sell.txt");
-		file << ticker << "\n" << amount_tradable;
+		file << ticker << "\n" << amount_tradable << "\n" << percent_sell;
 		file.close();
 	}
 };
 
 void CryptoBot::transaction_limits()
 {
-	if (cycle_counter % 30 == 0 && amount_tradable > 0 && initial_price * 1.05 <= current_price && velocity < 0)
+	if (cycle_counter % 30 == 0 && percent_ceiling != -999 &&  percent_sell != -999 && amount_tradable > 0 && initial_price * percent_ceiling <= current_price && velocity < 0)
 	{
-		std::cout << "Selling limit, calling Python file\n";
+		std::cout << "Selling ceiling reached, calling Python file\n";
 		fileCreation("sell");
-		//feel free to embed Python here for greater portability (we had x84 x64 differences that we didn't want to resolve)
-		system("C:/CryptoBot/PythonEndSell.py");
-		amount_tradable -= amount_tradable * 0.15;
+		std::string string_path = directory + "PythonEndSell.py";
+		char* char_path = const_cast<char*>(string_path.c_str());
+		std::system(char_path); //feel free to embed Python here for greater portability (I had x84 x64 differences that I didn't want to resolve)
+		amount_tradable -= amount_tradable * percent_sell;
+		free(char_path);
 	}
-	else if (cycle_counter % 30 == 0 && amount_tradable > 0 && initial_price * .85 >= current_price && velocity < 0)
+	else if (cycle_counter % 30 == 0 && percent_floor != -999 && percent_sell != -999 && amount_tradable > 0 && initial_price * percent_floor >= current_price && velocity < 0)
 	{
-		std::cout << "Selling limit, calling Python file\n";
+		std::cout << "Selling floor reached, calling Python file\n";
 		fileCreation("sell");
-		//feel free to embed Python here for greater portability (we had x84 x64 differences that we didn't want to resolve)
-		system("C:/CryptoBot/PythonEndSell.py");
-		amount_tradable -= amount_tradable * 0.15;
+		std::string string_path = directory + "PythonEndSell.py";
+		char* char_path = const_cast<char*>(string_path.c_str());
+		std::system(char_path); //feel free to embed Python here for greater portability (I had x84 x64 differences that I didn't want to resolve)
+		amount_tradable -= amount_tradable * percent_sell;
+		free(char_path);
 	}
-	else if (cycle_counter > 550 && min_price >= current_price)
+	else if (cycle_counter > 550 && percent_buy != -999 && buying_power > 0 && min_price >= current_price)
 	{
-		std::cout << "Buying limit, calling Python file\n";
+		std::cout << "Buying condition met, calling Python file\n";
 		fileCreation("buy");
-		//feel free to embed Python here for greater portability (we had x84 x64 differences that we didn't want to resolve)
-		system("C:/CryptoBot/PythonEndBuy.py");
-		double holder;
-		std::ifstream file("buy.txt");
-		file >> holder;
-		file.close();
-		std::remove("buy.txt");
-		buying_power -= holder;
-		amount_tradable += holder / current_price;
+		std::string string_path = directory + "PythonEndBuy.py";
+		char* char_path = const_cast<char*>(string_path.c_str());
+		std::system(char_path); //feel free to embed Python here for greater portability (I had x84 x64 differences that I didn't want to resolve)
+		double amount_bought = (buying_power * percent_buy) / current_price;
+		double new_amount_tradable = amount_tradable + amount_bought;
+		initial_price = ((amount_tradable * initial_price) + (amount_bought * current_price)) / new_amount_tradable; //while new and old coins are still held at different prices, this gives a better picture of the overall holdings
+		amount_tradable = new_amount_tradable;
+		buying_power -= buying_power * percent_buy;
 		cycle_counter = 0;
+		free(char_path);
 	}
 	updatePrice();
 };

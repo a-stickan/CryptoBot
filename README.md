@@ -1,7 +1,7 @@
 # CryptoBot
 
 
-My first major project, uses C++ and Python to execute market buy/sell orders of all currently avaliable cryptocurrencies on Robinhood Crypto. Written primarily in C++, Python script files are called to execute the actual orders.
+My first major repo! Uses C++ and Python to execute market buy/sell orders of all avaliable cryptocurrencies on Robinhood Crypto based on current market conditions. Written primarily in C++, Python script files are called to execute the actual orders.
 
 Libraries in Use:
 1. Curl for People (https://github.com/whoshuu/cpr)

@@ -24,7 +24,7 @@ See the "LICENSE" file for copyright information.
    
 3. Run the program by clicking on the "CryptoBotRelease" application.
 
-4. Follow the instructions in the console GUI to initalize CryptoBot's trading capabilities.
+4. Follow the instructions in the console GUI to initialize CryptoBot's trading capabilities.
 
 5. If you experience errors running "PythonEndLogin.py" (Robinhood doesn't play very well with logins), run the file ON ITS OWN
    and input your username, password, and secret code when prompted. Assuming you have store_session still set to true, the problem

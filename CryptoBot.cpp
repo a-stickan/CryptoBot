@@ -129,7 +129,7 @@ void CryptoBot::fileCreation(std::string type)
 			std::this_thread::sleep_for(timespan);
 		}
 		std::ofstream file("buy.txt");
-		file << ticker << "\n" << amount_tradable << "\n" << buying_power << "\n" << percent_buy;
+		file << ticker << "\n" << amount_tradable << "\n" << buying_power << "\n" << percent_buy << "\n" << directory;
 		file.close();
 	}
 	else
@@ -143,7 +143,7 @@ void CryptoBot::fileCreation(std::string type)
 			std::this_thread::sleep_for(timespan);
 		}
 		std::ofstream file("sell.txt");
-		file << ticker << "\n" << amount_tradable << "\n" << percent_sell;
+		file << ticker << "\n" << amount_tradable << "\n" << percent_sell << "\n" << directory;
 		file.close();
 	}
 };

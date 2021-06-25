@@ -17,6 +17,9 @@ try:
     content = file.readlines()
     ticker = content[0]
     amount = float(content[1])
+    percent = float(content[2])
+    directory = content[3]
+
     file.close()
     os.remove("sell.txt")
 except:
@@ -26,14 +29,14 @@ except:
 
 try:
     #sell will never be greater than the amount possessed
-    rs.robinhood.orders.order_sell_crypto_by_quantity(ticker,amount*0.15)
-    print("Successfully sold " + str(amount * 0.15) + " of " + str(ticker))
+    rs.robinhood.orders.order_sell_crypto_by_quantity(ticker,amount * percent)
+    print("Successfully sold " + str(amount * percent) + " of " + str(ticker))
 except:
     print("Error accessing Robinhood. Please check your internet connection.")
     sys.exit(0)
 
 try:
-    rs.robinhood.export.export_completed_crypto_orders(dir_path = 'C:\CryptoBot', file_name='completedorders.csv')
+    rs.robinhood.export.export_completed_crypto_orders(dir_path = str(directory), file_name='completedorders.csv')
 except:
     print("Error storing the transaction file.")
     

@@ -18,17 +18,17 @@ try:
     ticker = content[0]
     amount = float(content[1])
     buying_power = float(content[2])
-    buying_power *= 0.15; #change for different percentage
+    percent = float(content[3])
+    directory = content[4]
+
+    buying_power *= percent; #operates off percentages, theoretically leaving buying_power always > 0
     file.close();
-    f = open("buy.txt","w")
-    f.write(str(buying_power))
-    f.close()
+    os.remove("buy.txt")
 except:
     print("Error in the file system.")
     sys.exit(0)
 
 try:
-    #operates off percentages, theoretically leaving buying_power always > 0
     rs.robinhood.orders.order_buy_crypto_by_price(ticker,buying_power)
     print("Successfully bought $" + str(buying_power) + " of " + str(ticker))
 except:
@@ -36,6 +36,6 @@ except:
     sys.exit(0)
 
 try:
-    rs.robinhood.export.export_completed_crypto_orders(dir_path = 'C:\CryptoBot', file_name='completedorders.csv')
+    rs.robinhood.export.export_completed_crypto_orders(dir_path = str(directory), file_name='completedorders.csv')
 except:
     print("Error storing the transaction file.")

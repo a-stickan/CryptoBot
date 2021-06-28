@@ -15,7 +15,7 @@ See the "LICENSE" file for copyright information.
 
 1. Make sure you have a valid Robinhood account. CryptoBot at the moment only supports Robinhood accounts, so you will not be able to use CryptoBot if you do not have an account.
 
-1. Install and extract the latest stable release .zip folder, being sure to ignore any security/antivirus warnings that pop up. Even though the project is open source and you can check the code yourself to see it isn't malicious, downloading unknown .exe files from the internet will (predictably) set off some alarms in your system. As of now, the current stable release supports Windows, Linux, and Mac OS.
+1. Install and extract the latest stable release .zip folder, being sure to ignore any security/antivirus warnings that pop up. Even though the project is open source and you can check the code yourself to see it isn't malicious, downloading unknown .exe files from the internet will (predictably) set off some alarms in your system. As of now, the current stable release only supports Windows out of the box.
 
 2. Make sure all the files for the program are in the installed folder (name and location of the folder is irrelevant, but the names and locations of the files themselves should not be changed).
 
@@ -35,15 +35,14 @@ See the "LICENSE" file for copyright information.
 
 ## Things to Change (in order of priority):
 
-1. System() calls are very prominent in the C++ end. This is obviously not very scalable (or safe, or efficient), and is the most glaring issue with this repo. I had issues with other implementations (x64 and x84 incompatibilities), and did not have time to resolve the issues behind them.
+1. Add MacOS and Linux compatibility. Most of the code itself is already cross platform thanks to preprocessor directives, so almost all of the work will be in just getting the libraries to function.
+
+2. System() calls are very prominent in the C++ end and are the most glaring technical issue with this repo. I had issues with other implementations (x64 and x84 incompatibilities), and did not have time to resolve the issues behind them.
    Embedding Python calls (https://docs.python.org/3/extending/embedding.html) and going for more OS specific console clear commands would be the easiest way to solve this problem.
 
-2. Login issues with "PythonEndLogin.py". I could not determine why it worked sometimes on some machines with little effort but introduced massive
-   issues on others. Documentation at https://robin-stocks.readthedocs.io/en/latest/index.html.
+3. Stack and heap usage optimization. I'm unsure whether or not the indirect recursion in CryptoBot.cpp will ever realistically cause a stack overflow error, but it is something that can certainly be improved.
 
-3. Try catch error handling. This could probably be expanded on and improved on the C++ end.
-
-4. Stack and heap usage optimization. Not a major priority, but a lighter build of CryptoBot would be nice.
+4. Error handling. Could be made far more robust on the C++ end.
 
 ## Basic Code Documentation:
 

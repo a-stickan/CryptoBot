@@ -13,29 +13,28 @@ See the "LICENSE" file for copyright information.
 
 ## Instructions for Use:
 
-1. Make sure you have a valid Robinhood account. CryptoBot at the moment only supports Robinhood accounts, so you will not be able to use CryptoBot if you do not have an account.
+1. Make sure you have a valid Robinhood account. CryptoBot only supports Robinhood accounts, so you will not be able to use CryptoBot if you do not have an account.
 
-1. Install and extract the latest stable release .zip folder, being sure to ignore any security/antivirus warnings that pop up. Even though the project is open source and you can check the code yourself to see it isn't malicious, downloading unknown .exe files from the internet will (predictably) set off some alarms in your system. As of now, the latest release only supports Windows out of the box.
+2. Install and extract the latest stable release .zip folder, being sure to ignore any security/antivirus warnings that pop up. As of now, the latest release only supports Windows out of the box (use the CMakeLists.txt file and the raw source code for cross-platform).
 
-2. Make sure all the files for the program are in the installed folder (name and location of the folder is irrelevant, but the names and locations of the files themselves should not be changed).
+3. Make sure all the files for the program are in the installed folder (name and location of the folder is irrelevant, but the contained files and folders should not be changed in any way).
 
-2. Make sure you have Python 3 installed on your computer and that by default .py files are opened by the Python application. HAVING THE DEFAULT AS
+4. Make sure you have Python 3 installed on your computer and that by default .py files are opened by the Python application. HAVING THE DEFAULT AS
    AN IDE OR TEXT EDITOR MAY CAUSE SERIOUS ISSUES!
    
-3. Run the program by clicking on the "CryptoBotRelease" application.
+5. Run the program by clicking on the "CryptoBotRelease" application if you are on Windows. You will have to build the executable yourself if you are on Linux/Mac.
 
-4. Follow the instructions in the console GUI to initialize CryptoBot's trading capabilities.
+6. Follow the instructions in the console GUI to initialize CryptoBot's trading capabilities.
 
-5. If you experience errors running "PythonEndLogin.py" (Robinhood doesn't play very well with logins), run the file ON ITS OWN
-   and input your username, password, and secret code when prompted. Assuming you have store_session still set to true, the problem
-   should be fixed on all future logins until the login token expires. You may have to manually edit the .py file with your credentials to get it working, this step was inconsistent at best from machine to machine in my testing.
+7. If you experience errors running "PythonEndLogin.py" (Robinhood doesn't play very well with logins), run the file ON ITS OWN
+   and input your username, password, and secret code when prompted. The problem should be fixed on all future logins until the login token expires.
 
-6. (Optional but highly recommended) Every time a sell/buy order is processed, a .csv file is put into the installed folder. You can import this file
+8. (Optional but highly recommended) Every time a sell/buy order is processed, a .csv file is put into the installed folder. You can import this file
     into a sheet program like Excel to better manage your portfolio's progress and track your holdings.
 
 ## Things to Change (in order of priority):
 
-1. Add MacOS and Linux compatibility. Most of the code itself is already cross platform thanks to preprocessor directives, so almost all of the work will be in just getting the libraries to function.
+1. Better implement the cross-platform compatibility. The CMake end is done and the code itself is cross-platform, but no ready-made executable for Linux/Mac exists at the moment.
 
 2. System() calls are very prominent in the C++ end and are the most glaring technical issue with this repo. I had issues with other implementations (x64 and x84 incompatibilities), and did not have time to resolve the issues behind them.
    Embedding Python calls (https://docs.python.org/3/extending/embedding.html) and going for more OS specific console clear commands would be the easiest way to solve this problem.

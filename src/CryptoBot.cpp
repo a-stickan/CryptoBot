@@ -154,7 +154,7 @@ void CryptoBot::transaction_limits()
 	{
 		std::cout << "Selling ceiling reached, calling Python file\n";
 		fileCreation("sell");
-		std::string string_path = directory + "PythonEndSell.py";
+		std::string string_path = directory + "PythonScripts/PythonEndSell.py";
 		char* char_path = const_cast<char*>(string_path.c_str());
 		std::system(char_path); //feel free to embed Python here for greater portability (I had x84 x64 differences that I didn't want to resolve)
 		amount_tradable -= amount_tradable * percent_sell;
@@ -164,7 +164,7 @@ void CryptoBot::transaction_limits()
 	{
 		std::cout << "Selling floor reached, calling Python file\n";
 		fileCreation("sell");
-		std::string string_path = directory + "PythonEndSell.py";
+		std::string string_path = directory + "PythonScripts/PythonEndSell.py";
 		char* char_path = const_cast<char*>(string_path.c_str());
 		std::system(char_path); //feel free to embed Python here for greater portability (I had x84 x64 differences that I didn't want to resolve)
 		amount_tradable -= amount_tradable * percent_sell;
@@ -174,7 +174,7 @@ void CryptoBot::transaction_limits()
 	{
 		std::cout << "Buying condition met, calling Python file\n";
 		fileCreation("buy");
-		std::string string_path = directory + "PythonEndBuy.py";
+		std::string string_path = directory + "PythonScripts/PythonEndBuy.py";
 		char* char_path = const_cast<char*>(string_path.c_str());
 		std::system(char_path); //feel free to embed Python here for greater portability (I had x84 x64 differences that I didn't want to resolve)
 		double amount_bought = (buying_power * percent_buy) / current_price;

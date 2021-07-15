@@ -270,8 +270,7 @@ int main()
 		std::cout << "You have made a typo. Remember that \"I AGREE\" is case sensitive\n";
 	}
 
-	std::string location = std::filesystem::current_path().string();
-	location = location.substr(0 , location.size() - 3);
+	std::string location = std::filesystem::current_path().string() + "/";
 	for (int x = 0; x < location.size(); x++)
 	{
 		if (location[x] == '\\')
@@ -309,7 +308,7 @@ int main()
 		std::cout << "\nYou have either made a typo or the path to the file does not exist. Please try again.\n\n";
 	}
 	
-	std::string string_path = user_path + "PythonScripts/PythonEndLogin.py";
+	std::string string_path = user_path + "PythonEndLogin.py";
 	char* char_path = const_cast<char*>(string_path.c_str());
 	std::system(char_path);
 	free(char_path);

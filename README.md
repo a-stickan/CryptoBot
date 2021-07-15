@@ -1,12 +1,11 @@
 # CryptoBot
 
 
-Work in progress! Uses C++ and Python to execute market buy/sell orders of all avaliable cryptocurrencies on Robinhood Crypto based on current market conditions. Written primarily in C++, Python script files are called to execute the actual orders.
+Work in progress! Uses C++ and Python to execute market buy/sell orders of all avaliable cryptocurrencies on Robinhood Crypto based on current market conditions.
 
 Libraries in Use:
 1. Curl for People (https://github.com/whoshuu/cpr)
-2. Curl (https://github.com/curl/curl)
-3. Robin Stocks (https://github.com/jmfernandes/robin_stocks)
+2. Robin Stocks (https://github.com/jmfernandes/robin_stocks)
 
 See the "LICENSE" file for copyright information.
 
